@@ -71,9 +71,9 @@ function Notification() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [configs, setConfigs] = useState<ConfigData>({
-    serverConnect: 2,
-    totalCommand: 40,
-    totalMessage: 23000,
+    serverConnect: 0,
+    totalCommand: 0,
+    totalMessage: 0,
   });
   const [stats, setStats] = useState<
     Array<{
