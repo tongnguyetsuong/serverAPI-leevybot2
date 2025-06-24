@@ -17,17 +17,23 @@ const defaultConfig: Config = {
 const CACHE_KEY = "configs";
 
 // Middleware để validate dữ liệu một phần
-const validatePartialConfig = (data: any): Partial<Config> | null => {
+const validatePartialConfig = (data: unknown): Partial<Config> | null => {
   const result: Partial<Config> = {};
-  if (typeof data === "object" && data !== null) {
-    if ("serverConnect" in data && typeof data.serverConnect === "number") {
-      result.serverConnect = data.serverConnect;
+  if (
+    data &&
+    typeof data === "object" &&
+    data !== null &&
+    !Array.isArray(data)
+  ) {
+    const input = data as Record<string, unknown>; // Ép kiểu an toàn thành object
+    if ("serverConnect" in input && typeof input.serverConnect === "number") {
+      result.serverConnect = input.serverConnect;
     }
-    if ("totalMessage" in data && typeof data.totalMessage === "number") {
-      result.totalMessage = data.totalMessage;
+    if ("totalMessage" in input && typeof input.totalMessage === "number") {
+      result.totalMessage = input.totalMessage;
     }
-    if ("totalCommand" in data && typeof data.totalCommand === "number") {
-      result.totalCommand = data.totalCommand;
+    if ("totalCommand" in input && typeof input.totalCommand === "number") {
+      result.totalCommand = input.totalCommand;
     }
     return Object.keys(result).length > 0 ? result : null;
   }
